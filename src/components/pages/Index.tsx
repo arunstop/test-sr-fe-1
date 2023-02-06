@@ -33,11 +33,16 @@ export function PageIndex() {
     setTodos(new Map(todos.set(todo.id, todo)));
   }
 
+  function deleteTodo(todoId: string) {
+    todos.delete(todoId);
+    setTodos(new Map(todos));
+  }
+
   return (
-    <section className="p-2 sm:p-4 flex-1 flex flex-col gap-2 sm:gap-4">
+    <section className="p-2 sm:p-4 flex-1 flex flex-col gap-2 sm:gap-4 w-full max-w-5xl">
       <form className="grid gap-[inherit]" onSubmit={handleSubmit}>
         <InputText className="w-full" placeholder="Todo..." name="todoTitle" />
-        <Button type="submit">AdD</Button>
+        <Button type="submit">Add</Button>
       </form>
 
       <article className="menu menu-compact lg:menu-normal bg-base-100 p-2 rounded-box">
@@ -47,6 +52,7 @@ export function PageIndex() {
               key={id}
               todo={data}
               onUpdate={(updatedTodo) => updateTodo(updatedTodo)}
+              onDelete={(todoId) => deleteTodo(todoId)}
             >
               {data.title}
             </TodoItem>

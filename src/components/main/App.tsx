@@ -7,7 +7,7 @@ function App() {
   const [count, setCount] = useState(0);
 
   return (
-    <main className="flex flex-col min-h-screen bg-base-100">
+    <main className="flex flex-col min-h-screen bg-base-100 items-center">
       <Header />
       <PageIndex />
     </main>
