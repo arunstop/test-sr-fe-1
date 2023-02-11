@@ -19,8 +19,12 @@ export function TodoProvider({ children }: { children: ReactNode }) {
     setTodos(new Map(newTodos.map((e) => [e.id, e])));
   }
   useEffect(() => {
+    let isCurrent = true;
+    if (!isCurrent) return;
     initTodos();
-    return () => {};
+    return () => {
+      isCurrent = false;
+    };
   }, []);
 
   function addTodo(title: string) {
