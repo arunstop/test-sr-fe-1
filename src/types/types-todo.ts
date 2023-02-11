@@ -6,3 +6,19 @@ export interface TodoData {
   done?: boolean;
   deleted?: boolean;
 }
+
+
+export interface TodoDataFromApi{
+  userId: number
+    id: number
+    title: string
+    completed: boolean
+}
+
+export interface TTodoContext{
+  todos:Map<number,TodoDataFromApi>;
+  addTodo:(title:string)=>void
+  updateTodo: (todo:TodoDataFromApi)=>void
+  initTodos: ()=>void
+  deleteTodo: (todoId:number)=>void
+}

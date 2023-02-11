@@ -1,11 +1,12 @@
-import { FormEvent, useCallback, useState } from "react";
-import { TodoData } from "../../types/types-todo";
+import { FormEvent, useCallback, useEffect, useState } from "react";
+import { TodoDataFromApi } from "../../types/types-todo";
 import { Button } from "../commons/Button";
 import { InputText } from "../commons/InputText";
+import { useTodos } from "../contexts/TodoContext";
 import { TodoItem } from "../usecase/todo/TodoItem";
 
 export function PageIndex() {
-  const [todos, setTodos] = useState<Map<string, TodoData>>(new Map());
+  const { addTodo, deleteTodo, initTodos, todos, updateTodo } = useTodos();
   const todoList = Array.from(todos.entries());
 
   const handleSubmit = useCallback(
@@ -13,30 +14,11 @@ export function PageIndex() {
       ev.preventDefault();
       const title = ev.currentTarget.todoTitle.value;
       if (!title) return;
-      const id = crypto.randomUUID();
-      setTodos(
-        new Map(
-          todos.set(id, {
-            id: id,
-            date: Date.now(),
-            title: title,
-            description: "",
-          })
-        )
-      );
+      addTodo(title);
       ev.currentTarget.reset();
     },
     [todos]
   );
-
-  function updateTodo(todo: TodoData) {
-    setTodos(new Map(todos.set(todo.id, todo)));
-  }
-
-  function deleteTodo(todoId: string) {
-    todos.delete(todoId);
-    setTodos(new Map(todos));
-  }
 
   return (
     <section className="p-2 sm:p-4 flex-1 flex flex-col gap-2 sm:gap-4 w-full max-w-5xl">
